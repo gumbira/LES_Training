@@ -1,0 +1,141 @@
+!	LES MODEL BY GUMBIRA 
+! 
+!This is the input file for LES
+!
+!
+!
+!
+TITLE = SINBAD
+   ! -------------------PARALLEL INFO----------------------------- 
+   !  
+   !    PX*PY - Number of cores 
+   !    FYI: For optimum choose PX=ncores_max, PY=1 
+   !     
+ PX = 4
+ PY = 1
+   ! --------------------BATHYMETRY IN POSITIVE------------------------------------- 
+   !
+   !                           
+ DEPTH_TYPE = DATA 
+ DEPTH_FILE = sinbad1.txt
+   ! -------------------PRINT--------------------------------- 
+   ! Make folder to store the output, e.g. output
+   !  
+RESULT_FOLDER = output/ 
+   ! ------------------DIMENSION----------------------------- 
+   ! Mglob=number of grid in x-direction 
+   ! Nglob=number of grid in y-direction
+ Mglob = 80
+ Nglob = 19 
+
+   ! ----------------- TIME---------------------------------- 
+   ! TOTAL_TIME : Simulation time in seconds
+   ! PLOT_INTV : save the result every 50 seconds  
+   !  
+ TOTAL_TIME = 10800.0 
+ PLOT_INTV = 50.0 
+ PLOT_INTV_STATION = 0.5 
+ SCREEN_INTV = 50.0 
+!
+DX = 1.0 
+DY = 2.0 
+!   
+! ----------------Internal wave generation------------------------------ 
+! --------------- Gugum has changed this to include internal wave------
+! Only change DEP_WK, Xc_WK, Tperiod, AMP_WK !!! 	
+
+WAVEMAKER = WK_REG
+DEP_WK = 2.65 
+Xc_WK = 70.0 
+Tperiod = 4.0 
+AMP_WK = 0.85 
+Theta_WK = 0.0 
+Delta_WK = 3.0 
+
+
+
+  ! ---------------- PERIODIC BOUNDARY CONDITION --------- 
+  ! South-North periodic boundary condition (T/F) 
+  ! True means the lateral value is similar 
+PERIODIC = T
+
+  ! ---------------- SPONGE LAYER ------------------------ 
+  ! Give sponge in open boundary only
+  ! set width=0.0 if no sponge 
+
+DIFFUSION_SPONGE = F 
+FRICTION_SPONGE = T 
+DIRECT_SPONGE = T 
+Csp = 0.0 
+CDsponge = 1.0 
+Sponge_west_width =  0.0 
+Sponge_east_width =  10.0 
+Sponge_south_width = 0.0 
+Sponge_north_width = 0.0 
+
+  !----------------PHYSICS------------------------------ 
+  ! The physic has been set up to include all coastal hydor 
+  ! No need to do anything in this part, otherwise 
+  ! contact me if you have questions  
+  !----------------Friction----------------------------- 
+
+Cd = 0.005
+
+  ! ----------------NUMERICS---------------------------- 
+  ! No need to change this part
+  !
+! HIGH_ORDER = THIRD 
+  ! CFL 
+CFL = 0.5 
+  ! Froude Number Cap (to avoid jumping drop, set 1.5) 
+FroudeCap = 1.0 
+
+  ! --------------WET-DRY------------------------------- 
+  !  set value in m for wetting-drying 
+MinDepth=0.01 
+
+  ! -------------- BREAKING ----------------------------
+  ! ----------- This is based on labs results ----------
+VISCOSITY_BREAKING = F
+ROLLER_EFFECT =F  
+Cbrk1 = 0.65 
+Cbrk2 = 0.35 
+  ! ----------------- WAVE AVERAGE ------------------------ 
+  ! Calculation for internal wave 
+T_INTV_mean = 50.0 
+STEADY_TIME= 100.0 
+
+  ! -----------------OUTPUT----------------------------- 
+  ! NumberStations set to 0 to get results for all regions   
+  !  
+NumberStations = 0
+STATIONS_FILE = gauges.txt 
+! T/F for results 
+!
+DEPTH_OUT = T 
+U = T 
+V = T 
+ETA = T 
+Umean = T 
+Vmean = T 
+ETAmean = T 
+MASK = T 
+MASK9 = F 
+WaveHeight = T
+UNDERTOW = T
+ROLLER = T
+! ------  Sediment input
+! ------  contact me if you have question (gugum@liverpool.ac.uk)----!!!
+Bed_Change = T
+BedLoad = T
+Avalanche = T
+D50 = 0.0005
+Sdensity = 2.68
+n_porosity = 0.47
+WS = 0.0125
+Shields_cr = 0.055
+Shields_cr_bedload = 0.047
+Tan_phi = 0.7
+Kappa1 = 0.3333
+Kappa2 = 1.0
+MinDepthPickup = 0.1 
